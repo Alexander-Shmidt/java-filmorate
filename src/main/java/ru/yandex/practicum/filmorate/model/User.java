@@ -13,4 +13,12 @@ public class User {
     private final String login;
     private String name;
     private final LocalDate birthday;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }
