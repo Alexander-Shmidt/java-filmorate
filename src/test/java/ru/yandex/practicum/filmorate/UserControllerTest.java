@@ -42,8 +42,8 @@ public class UserControllerTest {
     @Test
     public void addUserNewUserTestSuccess() {
         User user = new User(
-                1,
                 "student.practicum@yandex.ru",
+                "Alex",
                 "Alex",
                 LocalDate.of(1970, 6, 8)
         );
@@ -61,9 +61,9 @@ public class UserControllerTest {
     @Test
     public void addUserNewUserEmailIsEmptyTestValidationError() {
         User user = new User(
-                1,
                 "",
                 "Alex",
+                "",
                 LocalDate.of(1970, 6, 8)
         );
         user.setName("Alex1");
@@ -84,9 +84,9 @@ public class UserControllerTest {
     @Test
     public void addUserNewUserEmailTestValidationError() {
         User user = new User(
-                1,
                 "student.practicum.yandex.ru",
                 "Alex",
+                "",
                 LocalDate.of(1970, 6, 8)
         );
         user.setName("Alex1");
@@ -107,9 +107,9 @@ public class UserControllerTest {
     @Test
     public void addUserNewUserBadLoginTestValidationError() {
         User user = new User(
-                1,
                 "student.practicum@yandex.ru",
                 "Alex Shmidt",
+                "",
                 LocalDate.of(1970, 6, 8)
         );
         user.setName("Alex1");
@@ -130,9 +130,9 @@ public class UserControllerTest {
     @Test
     public void addUserNewUserBirthdayInFutureTestValidationError() {
         User user = new User(
-                1,
                 "student.practicum@yandex.ru",
                 "Alex",
+                "",
                 LocalDate.of(2023, 6, 8)
         );
         user.setName("Alex1");
@@ -153,16 +153,16 @@ public class UserControllerTest {
     @Test
     public void allUsers() {
         User user1 = new User(
-                1,
                 "student1.practicum@yandex.ru",
                 "Alex",
+                "",
                 LocalDate.of(1970, 6, 8)
         );
         user1.setName("Alex1");
         User user2 = new User(
-                2,
                 "student2.practicum@yandex.ru",
                 "Tanya",
+                "",
                 LocalDate.of(1985, 12, 28)
         );
         user2.setName("Tanya1");
@@ -184,18 +184,18 @@ public class UserControllerTest {
     @Test
     public void updateUser() {
         User user1 = new User(
-                1,
                 "student1.practicum@yandex.ru",
                 "Alex",
+                "",
                 LocalDate.of(1970, 6, 8)
         );
         user1.setName("Alex1");
         template.postForEntity("/users", user1, User.class);
 
         User user2 = new User(
-                1,
                 "student1.practicum@yandex.ru",
                 "Alex12",
+                "",
                 LocalDate.of(1970, 6, 8)
         );
         user2.setName("Alex1");
