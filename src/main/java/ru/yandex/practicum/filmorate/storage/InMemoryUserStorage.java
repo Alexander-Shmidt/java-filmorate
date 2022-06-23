@@ -66,5 +66,7 @@ public class InMemoryUserStorage implements UserStorage {
     public void clearUsers() {
         users.clear();
         friendList.clear();
+        GLOBAL_USER_ID = 0;
+        GLOBAL_FILM_ID = 0;
     }
 }

@@ -39,7 +39,7 @@ public class FilmControllerTest {
                 "Матрица",
                 "фэнтэзи",
                 LocalDate.of(2000, 01, 01),
-                (long) 2.0
+                2L
         );
 
         ResponseEntity<Film> response = template.postForEntity("/films", film, Film.class);
@@ -48,7 +48,7 @@ public class FilmControllerTest {
         Assert.assertEquals("Матрица", response.getBody().getName());
         Assert.assertEquals("фэнтэзи", response.getBody().getDescription());
         Assert.assertEquals(LocalDate.of(2000, 01, 01), response.getBody().getReleaseDate());
-        Assert.assertEquals(Optional.of(2.0), response.getBody().getDuration());
+        Assert.assertTrue(2L == response.getBody().getDuration());
     }
 
     // Неуспешное добавление - неправильный идентификатор фильма.
@@ -59,7 +59,7 @@ public class FilmControllerTest {
                 "Матрица",
                 "фэнтэзи",
                 LocalDate.of(2000, 01, 01),
-                (long) 120.0
+                120L
         );
 
         HttpEntity<Film> request = new HttpEntity<>(film);
@@ -83,7 +83,7 @@ public class FilmControllerTest {
                 "",
                 "фэнтэзи",
                 LocalDate.of(2000, 01, 01),
-                (long) 120.0
+                120l
         );
 
         HttpEntity<Film> request = new HttpEntity<>(film);
@@ -109,7 +109,7 @@ public class FilmControllerTest {
                         " И вообще, не фильм, а сказка и бла-бла-бла. уже рука писать устала, а длина все никак не " +
                         "хочет набираться. Ну вот теперь-то точно больше 200 символов",
                 LocalDate.of(2000, 01, 01),
-                (long) 120.0
+                120l
         );
 
         HttpEntity<Film> request = new HttpEntity<>(film);
@@ -133,7 +133,7 @@ public class FilmControllerTest {
                 "Матрица",
                 "фэнтэзи",
                 LocalDate.of(1893, 01, 01),
-                (long) 120.0
+                120L
         );
 
         HttpEntity<Film> request = new HttpEntity<>(film);
@@ -157,7 +157,7 @@ public class FilmControllerTest {
                 "Матрица",
                 "фэнтэзи",
                 LocalDate.of(2000, 01, 01),
-                (long) -120.0
+                -120L
         );
 
         HttpEntity<Film> request = new HttpEntity<>(film);

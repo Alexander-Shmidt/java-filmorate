@@ -198,6 +198,7 @@ public class UserControllerTest {
                 "",
                 LocalDate.of(1970, 6, 8)
         );
+        user2.setId(1);
         user2.setName("Alex1");
         template.put("/users", user2, User.class);
 
