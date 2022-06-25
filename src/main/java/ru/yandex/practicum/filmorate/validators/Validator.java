@@ -20,12 +20,16 @@ public class Validator {
             if (film.getReleaseDate().isBefore(LocalDate.of(1895, 12, 28))) {
                 throw new ValidationException("Неверная дата релиза.");
             }
-            if (film.getDuration().isNegative()) {
+            if (film.getDuration() < 0) {
                 throw new ValidationException("Продолжительность фильма не может быть отрицательной.");
             }
     }
 
     public void addOrUpdateUserValidation(User user) {
+        if (user.getId() < 0) {
+            throw new ValidationException("ID пользователя не может быть отрицательным");
+        }
+
         if(user.getEmail() == null || user.getEmail().isBlank() || !user.getEmail().contains("@")) {
             throw new ValidationException("Адрес электронной почты указан неверно.");
         }
@@ -38,5 +42,26 @@ public class Validator {
         if (user.getName().isBlank()) {
             user.setName(user.getLogin());
         }
+    }
+
+    public void addFriendList(User author, User friend) {
+        if (author.equals(friend)) throw new ValidationException("Самому себе ты всегда друг");
+        else if (author.getFriends().contains(friend.getId())) {
+            throw new ValidationException("Друг с ID " + friend.getId() + " уже есть в списке");
+        }
+    }
+
+    public void deleteFriendList(User author, User friend) {
+        if (author.equals(friend)) throw new ValidationException("Нельзя удалить самого себя из своих друзей!");
+    }
+
+    public void likes(Film film, int userId) {
+        if (film.getLike().contains(userId)) throw new ValidationException("Пользователь с ID " + userId + " Уже ставил " +
+                "лайк этому фильму (" + film.getName() +")");
+    }
+
+    public void deleteLikes(Film film, int userId) {
+        if (!film.getLike().contains(userId)) throw new ValidationException("Пользователь с ID " + userId + " не ставил " +
+                "лайк этому фильму (" + film.getName() +")");
     }
 }

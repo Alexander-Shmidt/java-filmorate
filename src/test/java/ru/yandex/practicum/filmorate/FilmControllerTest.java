@@ -19,6 +19,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Проверяет методы FilmController.
@@ -38,7 +39,7 @@ public class FilmControllerTest {
                 "Матрица",
                 "фэнтэзи",
                 LocalDate.of(2000, 01, 01),
-                Duration.ofHours(2)
+                2L
         );
 
         ResponseEntity<Film> response = template.postForEntity("/films", film, Film.class);
@@ -47,7 +48,7 @@ public class FilmControllerTest {
         Assert.assertEquals("Матрица", response.getBody().getName());
         Assert.assertEquals("фэнтэзи", response.getBody().getDescription());
         Assert.assertEquals(LocalDate.of(2000, 01, 01), response.getBody().getReleaseDate());
-        Assert.assertEquals(Duration.ofHours(2), response.getBody().getDuration());
+        Assert.assertTrue(2L == response.getBody().getDuration());
     }
 
     // Неуспешное добавление - неправильный идентификатор фильма.
@@ -58,7 +59,7 @@ public class FilmControllerTest {
                 "Матрица",
                 "фэнтэзи",
                 LocalDate.of(2000, 01, 01),
-                Duration.ofHours(2)
+                120L
         );
 
         HttpEntity<Film> request = new HttpEntity<>(film);
@@ -82,7 +83,7 @@ public class FilmControllerTest {
                 "",
                 "фэнтэзи",
                 LocalDate.of(2000, 01, 01),
-                Duration.ofHours(2)
+                120l
         );
 
         HttpEntity<Film> request = new HttpEntity<>(film);
@@ -108,7 +109,7 @@ public class FilmControllerTest {
                         " И вообще, не фильм, а сказка и бла-бла-бла. уже рука писать устала, а длина все никак не " +
                         "хочет набираться. Ну вот теперь-то точно больше 200 символов",
                 LocalDate.of(2000, 01, 01),
-                Duration.ofHours(2)
+                120l
         );
 
         HttpEntity<Film> request = new HttpEntity<>(film);
@@ -132,7 +133,7 @@ public class FilmControllerTest {
                 "Матрица",
                 "фэнтэзи",
                 LocalDate.of(1893, 01, 01),
-                Duration.ofHours(2)
+                120L
         );
 
         HttpEntity<Film> request = new HttpEntity<>(film);
@@ -156,7 +157,7 @@ public class FilmControllerTest {
                 "Матрица",
                 "фэнтэзи",
                 LocalDate.of(2000, 01, 01),
-                Duration.ofHours(-2)
+                -120L
         );
 
         HttpEntity<Film> request = new HttpEntity<>(film);
@@ -180,14 +181,14 @@ public class FilmControllerTest {
                 "Матрица",
                 "фэнтэзи",
                 LocalDate.of(2000, 01, 01),
-                Duration.ofHours(2)
+                (long) 120.0
         );
         Film film2 = new Film(
                 2,
                 "Властелин Колец",
                 "фэнтэзи",
                 LocalDate.of(2001, 01, 01),
-                Duration.ofHours(3)
+                (long) 180.0
         );
         template.postForEntity("/films", film1, Film.class);
         template.postForEntity("/films", film2, Film.class);
@@ -211,7 +212,7 @@ public class FilmControllerTest {
                 "Матрица",
                 "фэнтэзи",
                 LocalDate.of(2000, 01, 01),
-                Duration.ofHours(2)
+                (long) 120.0
         );
         template.postForEntity("/films", film1, Film.class);
 
@@ -220,7 +221,7 @@ public class FilmControllerTest {
                 "Матрица2",
                 "фэнтэзи",
                 LocalDate.of(2001, 01, 01),
-                Duration.ofHours(2)
+                (long) 180.0
         );
         template.put("/films", film2, Film.class);
 
